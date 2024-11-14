@@ -123,6 +123,10 @@ main {
   background: #ffd800;
 }
 
+.fruit_new {
+  background: linear-gradient(blue, pink);
+}
+
 .fruit_lightbrown {
   background: #cd853f;
 }
