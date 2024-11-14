@@ -118,7 +118,7 @@ const comparationColor = (a, b) => {
   const priority = ['светло-коричневый', 'розово-красный', 'желтый', 'зеленый', 'фиолетовый']
   const priority1 = priority.indexOf(a.color);
   const priority2 = priority.indexOf(b.color);
-  return priority1 < priority2;
+  return priority1 > priority2;
 };
 
 const sortAPI = {
@@ -133,8 +133,29 @@ const sortAPI = {
     }
   },
 
-  quickSort(arr, comparation) {
+  quickSort(arr, comparation, left = 0, right = arr.length - 1) {
+    if (left >= right) return;
+
+    const pivotIndex = Math.floor((left + right) / 2);
+    const pivot = arr[pivotIndex];
     
+    let i = left;
+    let j = right;
+
+    while (i <= j) {
+      while (comparation(pivot, arr[i])) i++;
+      while (comparation(arr[j], pivot)) j--;
+
+      if (i <= j) {
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+        i++;
+        j--;
+      }
+    }
+
+    
+    sortAPI.quickSort(arr, comparation, left, j);
+    sortAPI.quickSort(arr, comparation, i, right);
   },
   
   
@@ -183,5 +204,10 @@ addActionButton.addEventListener('click', () => {
 
 againArr.addEventListener('click', () => {
   fruits = againFruits;
+  kindInput.value = '';
+  colorInput.value = '';
+  weightInput.value = '';
+  maxWeight.value = '';
+  minWeight.value = '';
   display();
 });
